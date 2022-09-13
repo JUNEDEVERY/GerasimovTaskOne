@@ -28,7 +28,8 @@ public class DBhelper {
 
         try {
             Class.forName("net.sourceforge.jtds.jdbc.Driver");
-            ConnectionURL = "jdbc:jtds:sqlserver://" + ip + ":" + port + ";" + "databasename=" + dataBase + ";user=" + userName + ";password=" + userPassword + ";";
+            ConnectionURL = "jdbc:jtds:sqlserver://" + ip + ":" + port + ";"
+                    + "databasename=" + dataBase + ";user=" + userName + ";password=" + userPassword + ";";
             connection = DriverManager.getConnection(ConnectionURL);
         } catch (Exception ex) {
             Log.e(" Error connection to DB", ex.getMessage());

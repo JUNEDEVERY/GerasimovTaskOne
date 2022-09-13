@@ -2,6 +2,7 @@ package com.example.gerasimovtaskone;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.Menu;
@@ -28,10 +29,25 @@ public class MainActivity extends AppCompatActivity {
     Connection connection;
     String errorMessage = "";
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Button btnGoToSecAct = (Button) findViewById(R.id.btnNext);
+        //слушатель кнопки
+        View.OnClickListener oclBtnGoToSecAct = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, TwoWindow.class);
+                startActivity(intent);
+            }
+        };
+        // обработчик
+        btnGoToSecAct.setOnClickListener(oclBtnGoToSecAct);
+
     }
 
     public void showTXT(View v) {
@@ -42,13 +58,16 @@ public class MainActivity extends AppCompatActivity {
 
             DBhelper dBhelper = new DBhelper();
             connection = dBhelper.connectionClass();
-            connection = "Checking";
+
+
             if (connection != null) {
                 String query = "Select *from Menu";
+
 //              запускаем запрос из sql
                 Statement statement = connection.createStatement();
                 ResultSet resultSet = statement.executeQuery(query);
                 while (resultSet.next()) {
+
                     TableRow dbOutputRow = new TableRow(this);
                     dbOutputRow.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                             LinearLayout.LayoutParams.WRAP_CONTENT));
@@ -82,13 +101,16 @@ public class MainActivity extends AppCompatActivity {
                     button_weight.setText(resultSet.getString(4));
                     button_weight.setTextSize(12);
                     dbOutputRow.addView(button_weight);
+                    List.addView(dbOutputRow);
+
                 }
             } else {
                 errorMessage = "Error Connection!";
             }
         } catch (Exception ex) {
-
+            errorMessage = "TRY CONNECTION!";
         }
     }
+
 
 }
